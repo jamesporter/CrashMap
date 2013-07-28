@@ -1,0 +1,79 @@
+$dark: #bbbbbb;
+$light: #dddddd;
+$main-text: #222222;
+
+$main-hl: #940a0a;
+$var-hl: #780a0a;
+$minor: #966751;
+$alt-hl: #284d6d;
+$alt-var-hl: #4a8a8a;
+
+body{
+    background: $light;
+    color: $main-text;
+    padding-top: 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-container{
+    width: 100%;
+    background: $light;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.full-container{
+  min-width:960px;
+  width: 100%;
+    background: $alt-hl;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: $dark;
+}
+
+
+.node{
+    stroke: #bbb;
+    stroke-width: 0.5px;
+}
+
+.link{
+    stroke: #999;
+    stroke-opacity: .6;
+}
+
+.graph-full{
+  background: $alt-hl;
+  position: absolute;
+  z-index: -900;
+
+  left:0px;
+  top:0px;
+  width: 100%;
+  height: 100%;
+}
+
+.graph-info {
+  width:100%;
+  position: absolute;
+    width:25%;
+    right:20px;
+    top:20px;
+    z-index: -899;
+    background: $light;
+    padding: 20px;
+}
+
+.graph text.label{
+    color: $light;
+}
+
+.label{
+  position: absolute;
+  z-index: -100;
+  color: $alt-var-hl;
+  font-size: 8em;
+  bottom: 20px;
+  width:100%;
+  text-align: center;
+}
