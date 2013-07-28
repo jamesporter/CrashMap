@@ -10,101 +10,101 @@ var svg = d3.select("#chart").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("/json/refined_graph.json", function(json) {
-    force
-        .nodes(json.nodes)
-        .links(json.links)
-        .start();
 
-    var link = svg.selectAll("line.link")
-        .data(json.links)
-        .enter().append("line")
-        .attr("class", "link")
-        .attr("stroke-width", 2)
-        .attr("stroke-color", "#000");
-
-    var node = svg.selectAll(".node")
-        .data(json.nodes)
-        .enter().append("g")
-        .attr("class", "node")
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout)
-        .call(force.drag);
-
-    node.append("rect")
-        .attr("width", function(d){
-            var rad = Math.sqrt( json.gdps["2001"][d.id] / 1000000000.0);
-            if(rad < 10.0){
-                return 10.0
-            }else{
-                return rad;
-            }
-        })
-        .attr("height", function(d){
-                    var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0);
-                    if(rad < 10.0){
-                        return 10.0
-                    }else{
-                        return rad;
-                    }
-                })
-        .attr("x", function(d){
-                    var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0)/-2;
-                    if(rad > - 5.0){
-                        return - 5.0
-                    }else{
-                        return rad;
-                    }
-                })
-                .attr("y", function(d){
-                            var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0)/-2;
-                            if(rad > - 5.0){
-                                return -5.0
-                            }else{
-                                return rad;
-                            }
-                        })
-        .attr("fill", "#fff");
-
-    node.append("text")
-        .attr("x", function(d){return 10 + d.n})
-        .attr("dy", ".5em")
-        .attr("font-size", "0.75em")
-        .style("stroke", "#dddddd")
-        .style("fill", "#dddddd")
-        .style("display", "none")
-        .text(function(d) { return d.id; });
-
-    force.on("tick", function() {
-        link.attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
-
-        node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-    });
-
-    function mouseover(d,i){
-        d3.select(this).select("rect")
-            .transition().duration(200)
-            .attr("fill", "#4a8a8a")
-
-        d3.select("#label-text")
-            .text(function(){console.log(d); console.log(this); return d.id;});
-    }
-
-    function mouseout(d,i){
-        d3.select(this).select("rect")
-            .transition().duration(200)
-            .attr("fill", "#fff")
-
-        d3.select("#label-text")
-                    .text("The Economic World Map");
-    }
-});
 
 d3.select("#play-button").on("click", function(){
+    d3.json("/json/refined_graph.json", function(json) {
+        force
+            .nodes(json.nodes)
+            .links(json.links)
+            .start();
 
+        var link = svg.selectAll("line.link")
+            .data(json.links)
+            .enter().append("line")
+            .attr("class", "link")
+            .attr("stroke-width", 2)
+            .attr("stroke-color", "#000");
+
+        var node = svg.selectAll(".node")
+            .data(json.nodes)
+            .enter().append("g")
+            .attr("class", "node")
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout)
+            .call(force.drag);
+
+        node.append("rect")
+            .attr("width", function(d){
+                var rad = Math.sqrt( json.gdps["2001"][d.id] / 1000000000.0);
+                if(rad < 10.0){
+                    return 10.0
+                }else{
+                    return rad;
+                }
+            })
+            .attr("height", function(d){
+                        var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0);
+                        if(rad < 10.0){
+                            return 10.0
+                        }else{
+                            return rad;
+                        }
+                    })
+            .attr("x", function(d){
+                        var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0)/-2;
+                        if(rad > - 5.0){
+                            return - 5.0
+                        }else{
+                            return rad;
+                        }
+                    })
+                    .attr("y", function(d){
+                                var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0)/-2;
+                                if(rad > - 5.0){
+                                    return -5.0
+                                }else{
+                                    return rad;
+                                }
+                            })
+            .attr("fill", "#fff");
+
+        node.append("text")
+            .attr("x", function(d){return 10 + d.n})
+            .attr("dy", ".5em")
+            .attr("font-size", "0.75em")
+            .style("stroke", "#dddddd")
+            .style("fill", "#dddddd")
+            .style("display", "none")
+            .text(function(d) { return d.id; });
+
+        force.on("tick", function() {
+            link.attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+
+            node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+        });
+
+        function mouseover(d,i){
+            d3.select(this).select("rect")
+                .transition().duration(200)
+                .attr("fill", "#4a8a8a")
+
+            d3.select("#label-text")
+                .text(function(){console.log(d); console.log(this); return d.id;});
+        }
+
+        function mouseout(d,i){
+            d3.select(this).select("rect")
+                .transition().duration(200)
+                .attr("fill", "#fff")
+
+            d3.select("#label-text")
+                        .text("The Economic World Map");
+        }
+    });
 });
 
