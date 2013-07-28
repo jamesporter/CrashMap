@@ -31,15 +31,39 @@ d3.json("/json/refined_graph.json", function(json) {
         .on("mouseout", mouseout)
         .call(force.drag);
 
-    node.append("circle")
-        .attr("r", function(d){
-            var rad = json.gdps["2001"][d.id] / 200000000000.0;
-            if(rad < 3.0){
-                return 3.0
+    node.append("rect")
+        .attr("width", function(d){
+            var rad = Math.sqrt( json.gdps["2001"][d.id] / 1000000000.0);
+            if(rad < 10.0){
+                return 10.0
             }else{
                 return rad;
             }
         })
+        .attr("height", function(d){
+                    var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0);
+                    if(rad < 10.0){
+                        return 10.0
+                    }else{
+                        return rad;
+                    }
+                })
+        .attr("x", function(d){
+                    var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0)/-2;
+                    if(rad > - 5.0){
+                        return - 5.0
+                    }else{
+                        return rad;
+                    }
+                })
+                .attr("y", function(d){
+                            var rad = Math.sqrt(json.gdps["2001"][d.id] / 1000000000.0)/-2;
+                            if(rad > - 5.0){
+                                return -5.0
+                            }else{
+                                return rad;
+                            }
+                        })
         .attr("fill", "#fff");
 
     node.append("text")
@@ -62,7 +86,7 @@ d3.json("/json/refined_graph.json", function(json) {
     });
 
     function mouseover(d,i){
-        d3.select(this).select("circle")
+        d3.select(this).select("rect")
             .transition().duration(200)
             .attr("fill", "#4a8a8a")
 
@@ -71,17 +95,16 @@ d3.json("/json/refined_graph.json", function(json) {
     }
 
     function mouseout(d,i){
-        d3.select(this).select("circle")
+        d3.select(this).select("rect")
             .transition().duration(200)
             .attr("fill", "#fff")
 
         d3.select("#label-text")
-                    .text("The Great Imbalance");
+                    .text("The Economic World Map");
     }
 });
 
 d3.select("#play-button").on("click", function(){
-
 
 });
 
