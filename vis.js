@@ -80,3 +80,8 @@ d3.json("/json/refined_graph.json", function(json) {
     }
 });
 
+d3.select("#play-button").on("click", function(){
+
+
+});
+
