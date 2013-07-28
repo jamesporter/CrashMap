@@ -3,7 +3,7 @@ var width = window.innerWidth,
 
 var force = d3.layout.force()
     .charge(-600)
-    .linkDistance(120)
+    .linkDistance(100)
     .size([width, height]);
 
 var svg = d3.select("#chart").append("svg")
@@ -29,12 +29,11 @@ d3.json("/json/refined_graph.json", function(json) {
         .attr("class", "node")
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
-        .on("click", click)
         .call(force.drag);
 
     node.append("circle")
         .attr("r", function(d){
-            var rad = json.gdps["2001"][d.id] / 100000000000.0;
+            var rad = json.gdps["2001"][d.id] / 200000000000.0;
             if(rad < 3.0){
                 return 3.0
             }else{
@@ -62,33 +61,22 @@ d3.json("/json/refined_graph.json", function(json) {
 
     });
 
-    function click(d,i){
-        d3.select("#info-title")
-            .text(function(){console.log(d.title); return d.title;});
-        d3.select("#info-url")
-            .attr("href", function(){return d.url;});
-        d3.select("#info-summary")
-            .text(function(){return d.summary;});
-    }
-
-    function mouseover(){
+    function mouseover(d,i){
         d3.select(this).select("circle")
             .transition().duration(200)
             .attr("fill", "#4a8a8a")
 
-        d3.select(this).select("text")
-            .transition().duration(200)
-            .style("display", "inline");
+        d3.select("#label-text")
+            .text(function(){console.log(d); console.log(this); return d.id;});
     }
 
-    function mouseout(){
+    function mouseout(d,i){
         d3.select(this).select("circle")
             .transition().duration(200)
             .attr("fill", "#fff")
 
-        d3.select(this).select("text")
-            .transition().duration(200)
-            .style("display", "none");
+        d3.select("#label-text")
+                    .text("The Great Imbalance");
     }
 });
 
