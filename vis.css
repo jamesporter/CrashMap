@@ -67,3 +67,10 @@ p {
 
 .hl {
   color: #4a8a8a; }
+
+#play-button {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  right: 20px;
+  bottom: 20px; }
